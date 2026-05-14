@@ -3,4 +3,6 @@ abstract final class AppAssets {
   static const String cart = 'assets/images/cart.svg';
   static const String paypal = 'assets/images/paypal.svg';
   static const String arrow = 'assets/images/arrow1.svg';
+  static const String logo = 'assets/images/logo.svg';
+  static const String vector= 'assets/images/Vector 11.png';
 }

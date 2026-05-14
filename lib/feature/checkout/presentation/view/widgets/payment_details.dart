@@ -37,7 +37,12 @@ class PaymentDetails extends StatelessWidget {
 
         bottomNavigationBar: Padding(
           padding: const EdgeInsets.all(20),
-          child: CustomButtom(title: 'Pay'),
+          child: CustomButtom(
+            title: 'Pay',
+            onTap: () {
+              Navigator.push(context, AppRoute.thankYouView);
+            },
+          ),
         ),
       ),
     );
