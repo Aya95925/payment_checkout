@@ -28,7 +28,7 @@ class PaymentDetails extends StatelessWidget {
                 SizedBox(height: 32),
                 PaymentDetailsListView(),
                 SizedBox(height: 32),
-                CreditCard(),
+                // CreditCard(),
                 SizedBox(height: 100), // space for button
               ],
             ),
