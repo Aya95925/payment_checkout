@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:injectable/injectable.dart';
 import 'package:payment_checkout/core/utils/api_keys.dart';
 import 'package:payment_checkout/core/utils/api_service.dart';
 import 'package:payment_checkout/feature/network/model/payment_intent_input_model.dart';
 import 'package:payment_checkout/feature/network/model/remote_payment_intent_model/remote_payment_intent_model.dart';
 
+@LazySingleton()
 class StripeSevice {
   final ApiService _apiService;
 

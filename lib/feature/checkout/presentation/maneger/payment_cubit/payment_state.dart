@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:payment_checkout/feature/network/model/payment_intent_input_model.dart';
+
 
 sealed class PaymentState extends Equatable {
   const PaymentState();

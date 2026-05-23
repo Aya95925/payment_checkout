@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:payment_checkout/core/utils/app_assets.dart';
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/custom_container_in_list_view.dart';
 
-
 class PaymentDetailsListView extends StatefulWidget {
   const PaymentDetailsListView({super.key});
 
@@ -27,7 +26,7 @@ class _PaymentDetailsListViewState extends State<PaymentDetailsListView> {
           return InkWell(
             onTap: () {
               currentIndex = index;
-
+      
               setState(() {});
               log(currentIndex.toString());
             },

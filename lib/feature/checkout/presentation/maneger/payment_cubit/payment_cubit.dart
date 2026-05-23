@@ -6,23 +6,34 @@ import 'package:payment_checkout/feature/network/model/payment_intent_input_mode
 
 @injectable
 class PaymentCubit extends Cubit<PaymentState> {
+
   PaymentCubit(this._checkOutRepo) : super(PaymentInitial());
+
   final CheckOutRepo _checkOutRepo;
+
   Future<void> makePayment({
     required PaymentIntentInputModel paymentIntentInputModel,
   }) async {
+
     emit(PaymentLoading());
 
-    var result = await _checkOutRepo.makePayment(
-      paymentIntentInputModel: paymentIntentInputModel,
-    );
-    result.fold(
-      ((failure) {
-        emit(PaymentFailure(failure.errMessage));
-      }),
-      (success) {
-        emit(PaymentSuccess());
-      },
-    );
+    try {
+
+      final result = await _checkOutRepo.makePayment(
+        paymentIntentInputModel: paymentIntentInputModel,
+      );
+
+      result.fold(
+        (failure) {
+          emit(PaymentFailure(failure.errMessage));
+        },
+        (success) {
+          emit(PaymentSuccess());
+        },
+      );
+
+    } catch (e) {
+      emit(PaymentFailure(e.toString()));
+    }
   }
 }
