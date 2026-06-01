@@ -91,7 +91,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                         paymentIntentInputModel: PaymentIntentInputModel(
                           amount: '100',
 
-                          currency: 'usd',
+                          currency: 'usd', customerId: 'cus_UcfifWILJ5jm9E',
                         ),
                       );
                     },

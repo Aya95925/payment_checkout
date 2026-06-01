@@ -9,6 +9,7 @@ class ApiService {
   Future<Response> post({
     required String url,
     required String token,
+    Map<String,String> ? headers,
     String? contentType,
     required body,
   }) async {
@@ -17,7 +18,7 @@ class ApiService {
       data: body,
       options: Options(
         contentType: Headers.formUrlEncodedContentType,
-        headers: {'Authorization': "Bearer $token"},
+        headers: headers??{'Authorization': "Bearer $token"},
       ),
     );
     return response;
