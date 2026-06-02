@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:payment_checkout/core/utils/app_color.dart';
 import 'package:payment_checkout/core/utils/app_style.dart';
-import 'package:payment_checkout/feature/checkout/presentation/view/widgets/custom_container_cridet_card.dart';
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/par_code.dart';
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/payment_info.dart';
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/total_price.dart';
@@ -20,32 +19,36 @@ class ThankYouCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 80),
+            const SizedBox(height: 40),
             Text('Thank you!', style: AppStyle.medium25Black),
             Text(
               'Your transaction was successful',
               style: AppStyle.regular20black,
+              textAlign: TextAlign.center,
             ),
-            SizedBox(height: 42),
-            PaymentInfo(title: 'Date', subTitle: '01/24/2023'),
-            SizedBox(height: 20),
-            PaymentInfo(title: 'Time', subTitle: '10:15 AM'),
-            SizedBox(height: 20),
-            PaymentInfo(title: 'To', subTitle: 'Sam Louis'),
-            SizedBox(height: 30),
+            const SizedBox(height: 24),
+            const PaymentInfo(title: 'Date', subTitle: '01/24/2023'),
+            const SizedBox(height: 12),
+            const PaymentInfo(title: 'Time', subTitle: '10:15 AM'),
+            const SizedBox(height: 12),
+            const PaymentInfo(title: 'To', subTitle: 'Sam Louis'),
+            const SizedBox(height: 14),
             Divider(color: AppColor.dividergrey, thickness: 2),
-            SizedBox(height: 24),
-            TotalPrice(total: 'Total', price: r'$50.97'),
-            SizedBox(height: 30),
-            CustomContainerCridetCard(),
-            Spacer(),
-            ParCode(),
-            SizedBox(height: 60),
+            const SizedBox(height: 14),
+            const TotalPrice(total: 'Total', price: r'$50.97'),
+
+            const SizedBox(height: 30),
+
+            // تم حذف CustomContainerCridetCard من هنا
+            const Spacer(),
+
+            const ParCode(),
+            const SizedBox(height: 60),
           ],
         ),
       ),
     );
   }
 }
-

@@ -95,6 +95,8 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     isLoading: state is PaymentLoading,
 
                     onTap: () {
+                     
+
                       if (selectedIndex == 0) {
                         cubit.makePayment(
                           paymentIntentInputModel: PaymentIntentInputModel(

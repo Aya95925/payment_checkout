@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:payment_checkout/core/utils/app_assets.dart';
 import 'package:payment_checkout/core/utils/app_color.dart';
+import 'package:payment_checkout/feature/checkout/presentation/view/widgets/custom_container_cridet_card.dart';
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/success_icon.dart';
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/thank_you_card.dart';
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/ticket_cut_circle.dart';
@@ -62,6 +63,14 @@ class ThankYouViewBody extends StatelessWidget {
                       lineThickness: 2,
                       dashColor: AppColor.darkgrey,
                     ),
+                  ),
+
+        
+                  Positioned(
+                    left: 20,
+                    right: 20,
+                    bottom: dividerPosition + 40,
+                    child: const CustomContainerCridetCard(),
                   ),
                 ],
               ),

@@ -12,7 +12,7 @@ class ParCode extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Row(
         children: [
-          FaIcon(FontAwesomeIcons.barcode, size: 90),
+          FaIcon(FontAwesomeIcons.barcode, size: 74),
           Spacer(),
           Container(
             padding: EdgeInsets.symmetric(horizontal: 28, vertical: 14),
