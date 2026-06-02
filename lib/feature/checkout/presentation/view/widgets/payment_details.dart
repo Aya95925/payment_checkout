@@ -14,6 +14,7 @@ import 'package:payment_checkout/feature/network/model/amount_model/amount_model
 import 'package:payment_checkout/feature/network/model/amount_model/details.dart';
 import 'package:payment_checkout/feature/network/model/item_model/item.dart';
 import 'package:payment_checkout/feature/network/model/item_model/item_model.dart';
+import 'package:payment_checkout/feature/network/model/payment_intent_input_model.dart';
 
 class PaymentDetails extends StatefulWidget {
   const PaymentDetails({super.key});
@@ -24,6 +25,7 @@ class PaymentDetails extends StatefulWidget {
 
 class _PaymentDetailsState extends State<PaymentDetails> {
   late final PaymentCubit cubit;
+  int selectedIndex = 0;
 
   @override
   void initState() {
@@ -65,10 +67,14 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
 
                 child: Column(
-                  children: const [
+                  children: [
                     SizedBox(height: 32),
 
-                    PaymentDetailsListView(),
+                    PaymentDetailsListView(
+                      onMethodSelected: (index) {
+                        selectedIndex = index;
+                      },
+                    ),
 
                     SizedBox(height: 32),
 
@@ -89,22 +95,26 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                     isLoading: state is PaymentLoading,
 
                     onTap: () {
-                      // cubit.makePayment(
-                      //   paymentIntentInputModel: PaymentIntentInputModel(
-                      //     amount: '100',
-                      //     currency: 'usd', customerId: 'cus_UcfifWILJ5jm9E',
-                      //   ),
-                      // );
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              customPaypalCheckoutView(
-                                _buildAmount(),
-                                _buildItems(),
-                                context,
-                              ),
-                        ),
-                      );
+                      if (selectedIndex == 0) {
+                        cubit.makePayment(
+                          paymentIntentInputModel: PaymentIntentInputModel(
+                            amount: '100',
+                            currency: 'usd',
+                            customerId: 'cus_UcfifWILJ5jm9E',
+                          ),
+                        );
+                      } else {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                customPaypalCheckoutView(
+                                  _buildAmount(),
+                                  _buildItems(),
+                                  context,
+                                ),
+                          ),
+                        );
+                      }
                     },
                   );
                 },

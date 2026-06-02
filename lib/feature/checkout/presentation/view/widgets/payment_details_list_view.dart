@@ -5,8 +5,8 @@ import 'package:payment_checkout/core/utils/app_assets.dart';
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/custom_container_in_list_view.dart';
 
 class PaymentDetailsListView extends StatefulWidget {
-  const PaymentDetailsListView({super.key});
-
+  const PaymentDetailsListView({super.key, required this.onMethodSelected});
+  final Function(int) onMethodSelected;
   @override
   State<PaymentDetailsListView> createState() => _PaymentDetailsListViewState();
 }
@@ -26,7 +26,7 @@ class _PaymentDetailsListViewState extends State<PaymentDetailsListView> {
           return InkWell(
             onTap: () {
               currentIndex = index;
-      
+              widget.onMethodSelected(index);
               setState(() {});
               log(currentIndex.toString());
             },
