@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
@@ -11,6 +10,10 @@ import 'package:payment_checkout/feature/checkout/presentation/maneger/payment_c
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/custom_button.dart';
 
 import 'package:payment_checkout/feature/checkout/presentation/view/widgets/payment_details_list_view.dart';
+import 'package:payment_checkout/feature/network/model/amount_model/amount_model.dart';
+import 'package:payment_checkout/feature/network/model/amount_model/details.dart';
+import 'package:payment_checkout/feature/network/model/item_model/item.dart';
+import 'package:payment_checkout/feature/network/model/item_model/item_model.dart';
 
 class PaymentDetails extends StatefulWidget {
   const PaymentDetails({super.key});
@@ -92,59 +95,76 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       //     currency: 'usd', customerId: 'cus_UcfifWILJ5jm9E',
                       //   ),
                       // );
+                      var amount = AmountModel(
+                        currency: "USD",
+                        details: Details(
+                          shipping: '0',
+                          shippingDiscount: 0,
+                          subtotal: '100',
+                        ),
+                        total: '100',
+                      );
+                      var item = ItemModel(
+                        items: [
+                          Item(
+                            currency: "USD",
+                            name: "Apple",
+                            price: '10',
+                            quantity: 4,
+                          ),
+                          Item(
+                            currency: "USD",
+                            name: "Pineapple",
+                            price: '12',
+                            quantity: 5,
+                          ),
+                        ],
+                      );
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) => PaypalCheckoutView(
                             sandboxMode: true,
-                            clientId:ApiKeys.paypalclientId,
+                            clientId: ApiKeys.paypalclientId,
                             secretKey: ApiKeys.paypalSecretKey,
-                            transactions: const [
+                            transactions: [
                               {
-                                "amount": {
-                                  "total": '100',
-                                  "currency": "USD",
-                                  "details": {
-                                    "subtotal": '100',
-                                    "shipping": '0',
-                                    "shipping_discount": 0,
-                                  },
-                                },
+                                "amount": amount.toJson(),
                                 "description":
                                     "The payment transaction description.",
-                                // "payment_options": {
-                                //   "allowed_payment_method":
-                                //       "INSTANT_FUNDING_SOURCE"
-                                // },
-                                "item_list": {
-                                  "items": [
-                                    {
-                                      "name": "Apple",
-                                      "quantity": 4,
-                                      "price": '10',
-                                      "currency": "USD",
-                                    },
-                                    {
-                                      "name": "Pineapple",
-                                      "quantity": 5,
-                                      "price": '12',
-                                      "currency": "USD",
-                                    },
-                                  ],
-                               
-                                },
+
+                                "item_list": item.toJson(),
                               },
                             ],
                             note: "Contact us for any questions on your order.",
                             onSuccess: (Map params) async {
-                              log("onSuccess: $params");
                               Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'The payment process was successful.',
+                                  ),
+                                ),
+                              );
+                              // log("onSuccess: $params");
                             },
                             onError: (error) {
-                              log("onError: $error");
+                              // log("onError: $error");
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("onError: $error")),
+                              );
+
                               Navigator.pop(context);
                             },
                             onCancel: () {
-                              log('cancelled:');
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'The payment process was canceled.',
+                                  ),
+                                ),
+                              );
+
                               Navigator.pop(context);
                             },
                           ),
