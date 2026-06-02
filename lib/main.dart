@@ -8,7 +8,7 @@ void main() async {
   configureDependencies();
   WidgetsFlutterBinding.ensureInitialized();
 
-  Stripe.publishableKey = ApiKeys.publishKey;
+  Stripe.publishableKey = ApiKeys.stripePublishKey;
 
   await Stripe.instance.applySettings();
   runApp(const PaymentCheckout());
