@@ -95,79 +95,14 @@ class _PaymentDetailsState extends State<PaymentDetails> {
                       //     currency: 'usd', customerId: 'cus_UcfifWILJ5jm9E',
                       //   ),
                       // );
-                      var amount = AmountModel(
-                        currency: "USD",
-                        details: Details(
-                          shipping: '0',
-                          shippingDiscount: 0,
-                          subtotal: '100',
-                        ),
-                        total: '100',
-                      );
-                      var item = ItemModel(
-                        items: [
-                          Item(
-                            currency: "USD",
-                            name: "Apple",
-                            price: '10',
-                            quantity: 4,
-                          ),
-                          Item(
-                            currency: "USD",
-                            name: "Pineapple",
-                            price: '12',
-                            quantity: 5,
-                          ),
-                        ],
-                      );
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (BuildContext context) => PaypalCheckoutView(
-                            sandboxMode: true,
-                            clientId: ApiKeys.paypalclientId,
-                            secretKey: ApiKeys.paypalSecretKey,
-                            transactions: [
-                              {
-                                "amount": amount.toJson(),
-                                "description":
-                                    "The payment transaction description.",
-
-                                "item_list": item.toJson(),
-                              },
-                            ],
-                            note: "Contact us for any questions on your order.",
-                            onSuccess: (Map params) async {
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'The payment process was successful.',
-                                  ),
-                                ),
-                              );
-                              // log("onSuccess: $params");
-                            },
-                            onError: (error) {
-                              // log("onError: $error");
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("onError: $error")),
-                              );
-
-                              Navigator.pop(context);
-                            },
-                            onCancel: () {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'The payment process was canceled.',
-                                  ),
-                                ),
-                              );
-
-                              Navigator.pop(context);
-                            },
-                          ),
+                          builder: (BuildContext context) =>
+                              customPaypalCheckoutView(
+                                _buildAmount(),
+                                _buildItems(),
+                                context,
+                              ),
                         ),
                       );
                     },
@@ -178,6 +113,70 @@ class _PaymentDetailsState extends State<PaymentDetails> {
           ),
         ),
       ),
+    );
+  }
+
+  PaypalCheckoutView customPaypalCheckoutView(
+    AmountModel amount,
+    ItemModel item,
+    BuildContext context,
+  ) {
+    return PaypalCheckoutView(
+      sandboxMode: true,
+      clientId: ApiKeys.paypalclientId,
+      secretKey: ApiKeys.paypalSecretKey,
+      transactions: [
+        {
+          "amount": amount.toJson(),
+          "description": "The payment transaction description.",
+
+          "item_list": item.toJson(),
+        },
+      ],
+      note: "Contact us for any questions on your order.",
+      onSuccess: (Map params) async {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(message: 'The payment process was successful.'),
+        );
+        Navigator.push(context, AppRoute.thankYouView);
+      },
+      onError: (error) {
+        // log("onError: $error");
+
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(customSnackBar(message: "onError: $error"));
+
+        Navigator.pop(context);
+      },
+      onCancel: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          customSnackBar(message: 'The payment process was canceled.'),
+        );
+
+        Navigator.pop(context);
+      },
+    );
+  }
+
+  SnackBar customSnackBar({required String message}) {
+    return SnackBar(content: Text(message));
+  }
+
+  AmountModel _buildAmount() {
+    return AmountModel(
+      currency: "USD",
+      details: Details(shipping: '0', shippingDiscount: 0, subtotal: '100'),
+      total: '100',
+    );
+  }
+
+  ItemModel _buildItems() {
+    return ItemModel(
+      items: [
+        Item(currency: "USD", name: "Apple", price: '10', quantity: 4),
+        Item(currency: "USD", name: "Pineapple", price: '12', quantity: 5),
+      ],
     );
   }
 }
